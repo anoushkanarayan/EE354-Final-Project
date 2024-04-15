@@ -27,7 +27,7 @@ module block_controller(
 			rgb=background;
 	end
 		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
-	assign block_fill=vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-15) && hCount<=(xpos+15); // dimensions of the block, we will want to make it smaller. 
+	assign block_fill=vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-25) && hCount<=(xpos+25); // dimensions of the block, we will want to make it smaller. 
 	// we would want the block to be +-3??
 	
 	always@(posedge clk, posedge rst) 
@@ -36,7 +36,7 @@ module block_controller(
 		begin 
 			//rough values for center of screen
 			xpos<=450;
-			ypos<=250;
+			ypos<=514;
 		end
 		else if (clk) begin
 		
@@ -49,23 +49,23 @@ module block_controller(
 			if(right) begin
 				xpos<=xpos+2; //change the amount you increment to make the speed faster 
 				if(xpos==800) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
-					xpos<=150;
+					xpos<=xpos;
 			end
 			else if(left) begin
 				xpos<=xpos-2;
 				if(xpos==150)
-					xpos<=800;
+					xpos<=xpos;
 			end
-			else if(up) begin
-				ypos<=ypos-2;
-				if(ypos==34)
-					ypos<=514;
-			end
-			else if(down) begin
-				ypos<=ypos+2;
-				if(ypos==514)
-					ypos<=34;
-			end
+			// else if(up) begin
+			// 	ypos<=ypos-2;
+			// 	if(ypos==34)
+			// 		ypos<=514;
+			// end
+			// else if(down) begin
+			// 	ypos<=ypos+2;
+			// 	if(ypos==514)
+			// 		ypos<=34;
+			// end
 		end
 	end
 	
@@ -78,10 +78,10 @@ module block_controller(
 				background <= 12'b1111_1111_0000;
 			else if(left)
 				background <= 12'b0000_1111_1111;
-			else if(down)
-				background <= 12'b0000_1111_0000;
-			else if(up)
-				background <= 12'b0000_0000_1111;
+			// else if(down)
+			// 	background <= 12'b0000_1111_0000;
+			// else if(up)
+			// 	background <= 12'b0000_0000_1111;
 	end
 
 	
