@@ -27,7 +27,7 @@ module block_controller(
 			rgb=background;
 	end
 		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
-	assign block_fill=vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-5) && hCount<=(xpos+5); // dimensions of the block, we will want to make it smaller. 
+	assign block_fill=vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-15) && hCount<=(xpos+15); // dimensions of the block, we will want to make it smaller. 
 	// we would want the block to be +-3??
 	
 	always@(posedge clk, posedge rst) 
