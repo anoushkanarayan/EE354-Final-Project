@@ -42,6 +42,8 @@ module vga_top(
 	wire Reset;
 	assign Reset=BtnC;
 	wire bright;
+	wire block_on; // changed block_on and color_blocks
+	wire [11:0] color_blocks;
 	wire[9:0] hc, vc;
 	wire[15:0] score;
 	wire [6:0] ssdOut; // change here. added this
@@ -69,9 +71,10 @@ module vga_top(
 	display_controller dc(.clk(ClkPort), .hSync(hSync), .vSync(vSync), .bright(bright), .hCount(hc), .vCount(vc));
 	block_controller sc(.clk(move_clk), .bright(bright), .rst(BtnC), .up(BtnU), .down(BtnD),.left(BtnL),.right(BtnR),.hCount(hc), .vCount(vc), .rgb(rgb), .background(background), .score(score));
 	counter cnt(.clk(ClkPort), .displayNumber(score), .anode(anode), .ssdOut(ssdOut)); // added this
+	breakout_blocks bb(.clk(ClkPort), .hCount(hc), .vCount(vc), .block_on(block_on), .color(color_blocks)); // for breakout_blocks
 	
 
-
+	assign rgb = block_on ? color_blocks : background;
 	
 	assign vgaR = rgb[11 : 8];
 	assign vgaG = rgb[7  : 4];
