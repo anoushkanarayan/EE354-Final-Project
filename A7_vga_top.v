@@ -168,3 +168,4 @@ module vga_top(
 	// assign {Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp} = {SSD_CATHODES};
 
 endmodule
+
