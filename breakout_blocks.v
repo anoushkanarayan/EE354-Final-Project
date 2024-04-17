@@ -24,6 +24,7 @@ module breakout_blocks(
     parameter GREEN = 12'b0000_1111_0000;
 
     // Calculate the end positions dynamically based on start and number of blocks
+    integer current_row;
     integer end_x = start_x + num_blocks_x * (block_width + block_spacing) - block_spacing;
     integer end_y = start_y + num_blocks_y * (block_height + block_spacing) - block_spacing;
 
@@ -34,8 +35,8 @@ module breakout_blocks(
 
         if ((hCount >= start_x && hCount < end_x) && (vCount >= start_y && vCount < end_y)) begin
             // Calculate the current row and column
-            integer current_row = (vCount - start_y) / (block_height + block_spacing);
-            integer current_col = (hCount - start_x) / (block_width + block_spacing);
+            current_row = (vCount - start_y) / (block_height + block_spacing);
+            //integer current_col = (hCount - start_x) / (block_width + block_spacing);
 
             // Check if the current pixel is within a block (excluding spacing)
             if (((hCount - start_x) % (block_width + block_spacing)) < block_width &&
@@ -43,10 +44,9 @@ module breakout_blocks(
                 block_on <= 1;
                 // Assign color alternately for each row
                 if (current_row % 2 == 0) color <= RED;
-                else color <= GREEN;
+                else color = GREEN;
                 end
         end
     end
 
 endmodule
-
