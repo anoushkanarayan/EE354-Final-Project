@@ -72,14 +72,17 @@ module vga_top(
 	block_controller sc(.clk(move_clk), .bright(bright), .rst(BtnC), .up(BtnU), .down(BtnD),.left(BtnL),.right(BtnR),.hCount(hc), .vCount(vc), .rgb(rgb), .background(background), .score(score));
 	counter cnt(.clk(ClkPort), .displayNumber(score), .anode(anode), .ssdOut(ssdOut)); // added this
 	breakout_blocks bb(.clk(ClkPort), .hCount(hc), .vCount(vc), .block_on(block_on), .color(color_blocks)); // for breakout_blocks
-	
 
-	assign rgb = block_on ? color_blocks : background;
+	//assign rgb = block_on ? color_blocks : background;
 	
-	assign vgaR = rgb[11 : 8];
-	assign vgaG = rgb[7  : 4];
-	assign vgaB = rgb[3  : 0];
-	
+	/*if(block_on)
+        assign vgaR = color_blocks[11 : 8];
+        assign vgaG = color_blocks[7  : 4];
+        assign vgaB = color_blocks[3  : 0];
+	else*/
+        assign vgaR = block_on ? color_blocks[11:8] : rgb[11 : 8];
+        assign vgaG = block_on ? color_blocks[7:4] : rgb[7  : 4];
+        assign vgaB = block_on ? color_blocks[3:0] : rgb[3  : 0];
 	// disable mamory ports
 	//assign {MemOE, MemWR, RamCS, QuadSpiFlashCS} = 4'b1111;
 	assign QuadSpiFlashCS = 1'b1;

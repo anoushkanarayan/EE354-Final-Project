@@ -7,7 +7,7 @@ module block_controller(
 	input up, input down, input left, input right,
 	input [9:0] hCount, vCount,
 	output reg [11:0] rgb,
-	output reg [11:0] background
+	output reg [11:0] background,
 	output reg [15:0] score
    );
 	wire block_fill;
