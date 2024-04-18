@@ -43,7 +43,9 @@ module vga_top(
 	assign Reset=BtnC;
 	wire bright;
 	wire block_on; // changed block_on and color_blocks
+	wire ball_on;
 	wire [11:0] color_blocks;
+	wire [11:0] ball_pixel;
 	wire[9:0] hc, vc;
 	wire[15:0] score;
 	wire [6:0] ssdOut; // change here. added this
@@ -72,6 +74,7 @@ module vga_top(
 	block_controller sc(.clk(move_clk), .bright(bright), .rst(BtnC), .up(BtnU), .down(BtnD),.left(BtnL),.right(BtnR),.hCount(hc), .vCount(vc), .rgb(rgb), .background(background), .score(score));
 	counter cnt(.clk(ClkPort), .displayNumber(score), .anode(anode), .ssdOut(ssdOut)); // added this
 	breakout_blocks bb(.clk(ClkPort), .hCount(hc), .vCount(vc), .block_on(block_on), .color(color_blocks)); // for breakout_blocks
+	ball_mechanics bm(.clk(ClkPort), .hCount(hc), .vCount(vc), .ball_pixel(ball_pixel), .ball_on(ball_on));
 
 	//assign rgb = block_on ? color_blocks : background;
 	
@@ -80,11 +83,23 @@ module vga_top(
         assign vgaG = color_blocks[7  : 4];
         assign vgaB = color_blocks[3  : 0];
 	else*/
-        assign vgaR = block_on ? color_blocks[11:8] : rgb[11 : 8];
-        assign vgaG = block_on ? color_blocks[7:4] : rgb[7  : 4];
-        assign vgaB = block_on ? color_blocks[3:0] : rgb[3  : 0];
+        // assign vgaR = block_on ? color_blocks[11:8] : rgb[11 : 8];
+        // assign vgaG = block_on ? color_blocks[7:4] : rgb[7  : 4];
+        // assign vgaB = block_on ? color_blocks[3:0] : rgb[3  : 0];
 	// disable mamory ports
 	//assign {MemOE, MemWR, RamCS, QuadSpiFlashCS} = 4'b1111;
+
+	assign vgaR = ball_on ? ball_pixel[11:8] :
+              (block_on ? color_blocks[11:8] : rgb[11:8]);
+
+	assign vgaG = ball_on ? ball_pixel[7:4] :
+				(block_on ? color_blocks[7:4] : rgb[7:4]);
+
+	assign vgaB = ball_on ? ball_pixel[3:0] :
+				(block_on ? color_blocks[3:0] : rgb[3:0]);
+
+
+
 	assign QuadSpiFlashCS = 1'b1;
 	
 	//------------
