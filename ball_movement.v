@@ -8,7 +8,7 @@ module ball_movement(
    );
 
 	// wire block_fill; our value is ball_on 
-    wire down;
+    integer down;
 
     parameter BLACK = 12'b0000_0000_0000;
 	parameter WHITE = 12'b1111_1111_1111;
@@ -23,8 +23,8 @@ module ball_movement(
 
 
 		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
-    assign down = 1;
-    assign greenMiddleSquare =(vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-25) && hCount<=(xpos+25))?1:0; // dimensions of the block, we will want to make it smaller. 
+    //assign down = 1;
+    assign greenMiddleSquare =(vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-5) && hCount<=(xpos+5))?1:0; // dimensions of the block, we will want to make it smaller. 
 
         // need to put this in the always (clk edge) *****************
 	// assign ball_on =(vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-25) && hCount<=(xpos+25))?1:0; // dimensions of the block, we will want to make it smaller. 
@@ -33,20 +33,21 @@ module ball_movement(
     initial begin
 		xpos<=450;
 		ypos<=514;
+		down = 1;
 		// score = 15'd0;
 		// reset = 1'b0;
 	end
 	
-	always@(posedge clk, posedge rst) 
+	always@(posedge clk) 
 	begin
-		if(rst)
+		/*if(rst)
 		begin 
 			//rough values for center of screen
 			xpos<=450;
 			ypos<=514;
 			// score = 15'd0;
-		end
-		else if (clk) begin
+		end*/
+		if (clk) begin
 		
 		/* Note that the top left of the screen does NOT correlate to vCount=0 and hCount=0. The display_controller.v file has the 
 			synchronizing pulses for both the horizontal sync and the vertical sync begin at vcount=0 and hcount=0. Recall that after 
@@ -60,17 +61,17 @@ module ball_movement(
             greenMiddleSquareSpeed = greenMiddleSquareSpeed + 50'd1;  // this is basically a counter
             if (greenMiddleSquareSpeed >= 50'd500000) //500 thousand
                 begin
-                    if (down) ypos = ypos + 10'd1;
-                    else ypos = ypos - 10'd1;
+                    if (down==1) ypos = ypos + 10'd1;
+                    else if (down==0) ypos = ypos - 10'd1;
                 // ypos = ypos + 10'd1;
                 greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
-                if (ypos == 10'd779)
+                if (ypos == 10'd514)
                     begin
-                        down = 0;
+                        down <= 0;
                     end
                 else if (ypos == 10'd0)
                     begin
-                        down = 1;
+                        down <= 1;
                     end
                 end
             if (greenMiddleSquare == 1)
