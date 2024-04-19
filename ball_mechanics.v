@@ -49,16 +49,6 @@ module ball_mechanics(
 		// reset = 1'b0;
 	end
 	
-	
-	always@ (posedge clk) // paint a white box on a red background
-	//ball_on <= 0;
-	 if (greenMiddleSquare == 1) begin
-		ball_pixel = GREEN;
-        ball_on <= 1;
-    end
-
-
-	
 	always@ (posedge clk)
 		begin
 		ball_on <= 0;
@@ -72,6 +62,10 @@ module ball_mechanics(
 				greenMiddleSquareY = 10'd0;
 				end
 			end
+			if (greenMiddleSquare == 1) begin
+                ball_pixel = GREEN;
+                ball_on <= 1;
+            end
 		end
 
 	// always@ (posedge clk)
@@ -87,8 +81,8 @@ module ball_mechanics(
 
 	// assign whiteZone = ((hCount >= 10'd144) && (hCount <= 10'd784)) && ((vCount >= 10'd400) && (vCount <= 10'd475)) ? 1 : 0;
 
-	assign greenMiddleSquare = ((hCount >= 10'd340) && (hCount < 10'd380)) &&
-				   ((vCount >= greenMiddleSquareY) && (vCount <= greenMiddleSquareY + 10'd40)) ? 1 : 0; // defining where the green square is
+	assign greenMiddleSquare = ((hCount >= 10'd340) && (hCount < 10'd350)) &&
+				   ((vCount >= greenMiddleSquareY) && (vCount <= greenMiddleSquareY + 10'd10)) ? 1 : 0; // defining where the green square is
                    // right now it is confined to a narrow vertical strip
 	
 endmodule
