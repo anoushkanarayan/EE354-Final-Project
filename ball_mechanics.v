@@ -27,7 +27,7 @@ module ball_mechanics(
 	// input button,
 	input [9:0] hCount, vCount,
 	output reg [11:0] ball_pixel,
-    output reg ball_on, // Output to indicate whether we're on a block pixel
+    output reg ball_on // Output to indicate whether we're on a block pixel
 	// output reg [15:0] score
    );
 	
@@ -50,16 +50,18 @@ module ball_mechanics(
 	end
 	
 	
-	always@ (*) // paint a white box on a red background
-	 if (greenMiddleSquare == 1)
+	always@ (posedge clk) // paint a white box on a red background
+	//ball_on <= 0;
+	 if (greenMiddleSquare == 1) begin
 		ball_pixel = GREEN;
         ball_on <= 1;
-
+    end
 
 
 	
 	always@ (posedge clk)
 		begin
+		ball_on <= 0;
 		greenMiddleSquareSpeed = greenMiddleSquareSpeed + 50'd1; 
 		if (greenMiddleSquareSpeed >= 50'd500000) //500 thousand
 			begin
