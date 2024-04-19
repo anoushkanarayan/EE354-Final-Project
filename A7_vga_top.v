@@ -74,7 +74,8 @@ module vga_top(
 	block_controller sc(.clk(move_clk), .bright(bright), .rst(BtnC), .up(BtnU), .down(BtnD),.left(BtnL),.right(BtnR),.hCount(hc), .vCount(vc), .rgb(rgb), .background(background), .score(score));
 	counter cnt(.clk(ClkPort), .displayNumber(score), .anode(anode), .ssdOut(ssdOut)); // added this
 	breakout_blocks bb(.clk(ClkPort), .hCount(hc), .vCount(vc), .block_on(block_on), .color(color_blocks)); // for breakout_blocks
-	ball_mechanics bm(.clk(ClkPort), .hCount(hc), .vCount(vc), .ball_pixel(ball_pixel), .ball_on(ball_on));
+	// ball_mechanics bm(.clk(ClkPort), .hCount(hc), .vCount(vc), .ball_pixel(ball_pixel), .ball_on(ball_on));
+	ball_movement ballm(.clk(ClkPort), .hCount(hc), .vCount(vc), .ball_pixel(ball_pixel), .ball_on(ball_on)); //
 
 	//assign rgb = block_on ? color_blocks : background;
 	
