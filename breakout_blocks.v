@@ -11,11 +11,11 @@ module breakout_blocks(
     // Parameters for block size and positioning
     parameter block_width = 40;
     parameter block_height = 20;
-    parameter num_blocks_x = 10;
+    parameter num_blocks_x = 13;
     parameter num_blocks_y = 4; // Adjusted to fill top third of the screen
     parameter block_spacing = 5; // Spacing between blocks
-    parameter start_x = 50; // X position to start drawing blocks
-    parameter start_y = 30; // Y position to start drawing blocks
+    parameter start_x = 200; // X position to start drawing blocks
+    parameter start_y = 150; // Y position to start drawing blocks
 
     // Colors for the blocks
     parameter BLACK = 12'b0000_0000_0000;
