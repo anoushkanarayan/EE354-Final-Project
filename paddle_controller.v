@@ -8,7 +8,8 @@ module block_controller(
 	input [9:0] hCount, vCount,
 	output reg [11:0] rgb,
 	output reg [11:0] background,
-	output reg [15:0] score
+	output reg [15:0] score,
+	output reg paddle_on
    );
 	wire block_fill;
 	
@@ -20,12 +21,17 @@ module block_controller(
 	/*when outputting the rgb value in an always block like this, make sure to include the if(~bright) statement, as this ensures the monitor 
 	will output some data to every pixel and not just the images you are trying to display*/
 	always@ (*) begin
-    	if(~bright )	//force black if not inside the display area
+    	if(~bright ) begin	//force black if not inside the display area
 			rgb = 12'b0000_0000_0000;
-		else if (block_fill) 
+			paddle_on = 0;
+		end
+		else if (block_fill) begin
 			rgb = RED; 
-		else	
+			paddle_on = 1;
+		end else begin	
 			rgb=background;
+			paddle_on = 0;
+		end
 	end
 		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
 	assign block_fill=vCount>=(ypos-5) && vCount<=(ypos+5) && hCount>=(xpos-25) && hCount<=(xpos+25); // dimensions of the block, we will want to make it smaller. 
