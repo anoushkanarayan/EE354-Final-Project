@@ -4,8 +4,10 @@ module breakout_blocks(
     input clk,
     input [9:0] hCount, // Horizontal pixel count from the display_controller
     input [9:0] vCount, // Vertical pixel count from the display_controller
+    input [55:0] visible_out,
     output reg block_on, // Output to indicate whether we're on a block pixel
-    output reg [11:0] color // Output color based on block state
+    output reg [11:0] color, // Output color based on block state
+    output reg [55:0] visible
     );
 
     // Parameters for block size and positioning
@@ -25,22 +27,32 @@ module breakout_blocks(
 
     // Calculate the end positions dynamically based on start and number of blocks
     integer current_row;
+    integer block_idx_x, block_idx_y, idx;
     integer end_x = start_x + num_blocks_x * (block_width + block_spacing) - block_spacing;
     integer end_y = start_y + num_blocks_y * (block_height + block_spacing) - block_spacing;
+
+    initial begin
+        visible = 56'b11111111111111111111111111111111111111111111111111111111; // All blocks are visible initially
+    end
 
     // Generate signal for block visibility and assign color
     always @(posedge clk) begin
         block_on <= 0;
         color <= BLACK;
+        //visible <= visible_out;
 
         if ((hCount >= start_x && hCount < end_x) && (vCount >= start_y && vCount < end_y)) begin
             // Calculate the current row and column
             current_row = (vCount - start_y) / (block_height + block_spacing);
             //integer current_col = (hCount - start_x) / (block_width + block_spacing);
 
+            //block_idx_x = (hCount - start_x) / (block_width + block_spacing);
+            //block_idx_y = (vCount - start_y) / (block_height + block_spacing);
+            idx = block_idx_y * num_blocks_x + block_idx_x;
+
             // Check if the current pixel is within a block (excluding spacing)
             if (((hCount - start_x) % (block_width + block_spacing)) < block_width &&
-                ((vCount - start_y) % (block_height + block_spacing)) < block_height) begin
+                ((vCount - start_y) % (block_height + block_spacing)) < block_height /*&& visible[idx]*/ && visible_out[idx]) begin
                 block_on <= 1;
                 // Assign color alternately for each row
                 if (current_row % 2 == 0) color <= RED;

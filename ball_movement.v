@@ -5,8 +5,11 @@ module ball_movement(
 	input [9:0] hCount, vCount,
 	input paddle_on,
 	input [9:0] paddle_xpos, paddle_ypos,
+	input [55:0] visible,
 	output reg [11:0] ball_pixel,
-    output reg ball_on // Output to indicate whether we're on a block pixel
+    output reg ball_on, // Output to indicate whether we're on a block pixel
+	output reg [2:0] lives,
+	output reg [55:0] visible_out
    );
 
 	// wire block_fill; our value is ball_on 
@@ -16,13 +19,20 @@ module ball_movement(
 	parameter WHITE = 12'b1111_1111_1111;
 	parameter RED   = 12'b1111_0000_0000;
 	parameter GREEN = 12'b0000_1111_0000;
+
+	parameter num_blocks_x = 14;
+    parameter num_blocks_y = 4;
+	parameter block_spacing = 5;
+	parameter block_width = 40;
+    parameter block_height = 20;
+	parameter start_x = 152;
+    parameter start_y = 150;
 	
 	//these two values dictate the center of the block, incrementing and decrementing them leads the block to move in certain directions
 	reg [9:0] xpos, ypos; // position of center of the block. We will also have a block type thing
     reg[49:0] greenMiddleSquareSpeed; 
     wire greenMiddleSquare;
-	
-
+	integer block_idx, block_x, block_y;
 
 		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
     //assign down = 1;
@@ -36,6 +46,8 @@ module ball_movement(
 		xpos<=450;
 		ypos<=514;
 		down = 1;
+		lives = 3;
+		visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
 		// score = 15'd0;
 		// reset = 1'b0;
 	end
@@ -65,19 +77,31 @@ module ball_movement(
                 begin
                     if (down==1) ypos = ypos + 10'd1;
                     else if (down==0) ypos = ypos - 10'd1;
-                // ypos = ypos + 10'd1;
-                greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
-                
-                if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 25 && xpos <= paddle_xpos + 25)
-                    down <= 0;
-                else if (ypos == 10'd700)
-                    begin
-                        down <= 0;
-                    end
-                else if (ypos == 10'd0)
-                    begin
-                        down <= 1;
-                    end
+					// ypos = ypos + 10'd1;
+					greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
+					
+					if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos + 30)
+						down <= 0;
+					else if (ypos == 10'd600)
+						begin
+							down <= 0;
+						end
+					else if (ypos == 10'd0)
+						begin
+							down <= 1;
+						end
+
+					for (block_idx = 0; block_idx < num_blocks_x * num_blocks_y; block_idx=block_idx+1) 
+						begin
+							block_x = start_x + (block_idx % num_blocks_x) * (block_width + block_spacing);
+							block_y = start_y + (block_idx / num_blocks_x) * (block_height + block_spacing);
+
+							if (visible[block_idx] && xpos >= block_x && xpos < block_x + block_width && ypos >= block_y && ypos < block_y + block_height) 
+								begin
+									visible_out[block_idx] = 0; // Block hit
+									down <= 1; // Change direction
+								end
+						end
                 end
             if (greenMiddleSquare == 1)
                 begin
