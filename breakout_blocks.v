@@ -52,7 +52,7 @@ module breakout_blocks(
 
             // Check if the current pixel is within a block (excluding spacing)
             if (((hCount - start_x) % (block_width + block_spacing)) < block_width &&
-                ((vCount - start_y) % (block_height + block_spacing)) < block_height /*&& visible[idx]*/ && visible_out[idx]) begin
+                ((vCount - start_y) % (block_height + block_spacing)) < block_height && visible[idx] /*&& visible_out[idx]*/) begin
                 block_on <= 1;
                 // Assign color alternately for each row
                 if (current_row % 2 == 0) color <= RED;

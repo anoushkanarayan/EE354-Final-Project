@@ -45,6 +45,7 @@ module vga_top(
 	wire block_on; // changed block_on and color_blocks
 	wire ball_on;
 	wire paddle_on;
+	wire [2:0] lives;
 	wire [9:0] paddle_xpos, paddle_ypos;
 	wire [11:0] color_blocks;
 	wire [11:0] ball_pixel;
@@ -52,7 +53,7 @@ module vga_top(
 	wire[15:0] score;
 	wire [6:0] ssdOut; // change here. added this
 	wire up,down,left,right;
-	wire [3:0] anode;
+	wire [7:0] anode;
 	wire [11:0] rgb;
 	wire rst;
 	wire [55:0] visible;
@@ -76,10 +77,10 @@ module vga_top(
 	wire [11:0] background;
 	display_controller dc(.clk(ClkPort), .hSync(hSync), .vSync(vSync), .bright(bright), .hCount(hc), .vCount(vc));
 	block_controller sc(.clk(move_clk), .bright(bright), .rst(BtnC), .up(BtnU), .down(BtnD),.left(BtnL),.right(BtnR),.hCount(hc), .vCount(vc), .rgb(rgb), .background(background), .score(score), .paddle_on(paddle_on), .xpos(paddle_xpos), .ypos(paddle_ypos));
-	counter cnt(.clk(ClkPort), .displayNumber(score), .anode(anode), .ssdOut(ssdOut)); // added this
+	counter cnt(.clk(ClkPort), .displayNumber(score), .displayScore(lives), .anode(anode), .ssdOut(ssdOut)); // added this
 	breakout_blocks bb(.clk(ClkPort), .hCount(hc), .vCount(vc), .visible_out(visible_out), .block_on(block_on), .color(color_blocks), .visible(visible)); // for breakout_blocks
 	// ball_mechanics bm(.clk(ClkPort), .hCount(hc), .vCount(vc), .ball_pixel(ball_pixel), .ball_on(ball_on));
-	ball_movement ballm(.clk(ClkPort), .hCount(hc), .vCount(vc), .paddle_on(paddle_on), .paddle_xpos(paddle_xpos), .paddle_ypos(paddle_ypos), .visible(visible), .ball_pixel(ball_pixel), .ball_on(ball_on), .visible_out(visible_out));
+	ball_movement ballm(.clk(ClkPort), .hCount(hc), .vCount(vc), .paddle_on(paddle_on), .paddle_xpos(paddle_xpos), .paddle_ypos(paddle_ypos), .visible(visible), .ball_pixel(ball_pixel), .ball_on(ball_on), .lives(lives), .visible_out(visible_out));
 
 	//assign rgb = block_on ? color_blocks : background;
 	
