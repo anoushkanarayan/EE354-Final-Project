@@ -4,6 +4,7 @@ module ball_movement(
 	input clk, //this clock must be a slow enough clock to view the changing positions of the objects
 	input [9:0] hCount, vCount,
 	input paddle_on,
+	input [9:0] paddle_xpos, paddle_ypos,
 	output reg [11:0] ball_pixel,
     output reg ball_on // Output to indicate whether we're on a block pixel
    );
@@ -67,9 +68,9 @@ module ball_movement(
                 // ypos = ypos + 10'd1;
                 greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
                 
-                if ((greenMiddleSquare == 1) && (paddle_on == 1))
+                if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 25 && xpos <= paddle_xpos + 25)
                     down <= 0;
-                else if (ypos == 10'd600)
+                else if (ypos == 10'd700)
                     begin
                         down <= 0;
                     end

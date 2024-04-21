@@ -9,7 +9,8 @@ module block_controller(
 	output reg [11:0] rgb,
 	output reg [11:0] background,
 	output reg [15:0] score,
-	output reg paddle_on
+	output reg paddle_on,
+	output reg [9:0] xpos, ypos
    );
 	wire block_fill;
 	
@@ -89,7 +90,7 @@ module block_controller(
 			background <= 12'b1111_1111_1111;
 		else 
 			if(right)
-				background <= 12'b1111_1111_0000;
+				background <= 12'b1100_1111_1100;
 			else if(left)
 				background <= 12'b0000_1111_1111;
 			// else if(down)
