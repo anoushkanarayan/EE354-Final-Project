@@ -14,6 +14,7 @@ module ball_movement(
 
 	// wire block_fill; our value is ball_on 
     integer down;
+    integer right;
 
     parameter BLACK = 12'b0000_0000_0000;
 	parameter WHITE = 12'b1111_1111_1111;
@@ -50,6 +51,7 @@ module ball_movement(
 		lives = 3;
 		livesFlag = 1;
 		visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
+        right = 2;
 		// score = 15'd0;
 		// reset = 1'b0;
 	end
@@ -79,13 +81,26 @@ module ball_movement(
                 begin
                     if (down==1) ypos = ypos + 10'd1;
                     else if (down==0) ypos = ypos - 10'd1;
+                    if (right ==1) xpos = xpos + 10'd1;
+                    else if (right == 0) xpos = xpos - 10'd1;
 					// ypos = ypos + 10'd1;
 					greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
 					
-					if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos + 30)
+					if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 9 && xpos <= paddle_xpos + 9)
 						begin
 							down <= 0;
+                            right <= 2;
 						end
+                    if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos - 10)
+                        begin   
+                            right <= 0;
+                            down <= 0;
+                        end
+                    if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos <= paddle_xpos + 30 && xpos >= paddle_xpos + 10)
+                    begin   
+                        right <= 1;
+                        down <= 0;
+                    end
 					else if ((ypos > paddle_ypos + 8) && livesFlag) 
 						begin
 							lives <= lives-1;
