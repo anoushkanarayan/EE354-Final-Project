@@ -47,7 +47,7 @@ module ball_movement(
 
     initial begin
 		xpos<=450;
-		ypos<=514;
+		ypos<=300;
 		down = 1;
 		lives = 9;
 		livesFlag = 1;
