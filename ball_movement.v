@@ -91,12 +91,12 @@ module ball_movement(
 							down <= 0;
                             right <= 2;
 						end
-                    if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos - 10)
+                    else if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos - 10)
                         begin   
                             right <= 0;
                             down <= 0;
                         end
-                    if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos <= paddle_xpos + 30 && xpos >= paddle_xpos + 10)
+                    else if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos <= paddle_xpos + 30 && xpos >= paddle_xpos + 10)
                     begin   
                         right <= 1;
                         down <= 0;
@@ -115,7 +115,14 @@ module ball_movement(
 						begin
 							down <= 1;
 						end
-
+                    else if (xpos >= 800)
+                        begin 
+                            right <=0;
+                        end
+                    else if (xpos <= 150)
+                        begin
+                            right <= 1;
+                        end
 					if (ypos <= paddle_ypos + 8)
 						livesFlag <= 1;
 
