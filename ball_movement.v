@@ -66,7 +66,7 @@ module ball_movement(
             lives = 9;
             right = 2;
 			xpos<=450;
-			ypos<=514;
+			ypos<=300;
             down = 1;
 			// score = 15'd0;
 		end
