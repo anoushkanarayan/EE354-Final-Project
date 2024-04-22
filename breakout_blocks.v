@@ -39,15 +39,15 @@ module breakout_blocks(
     always @(posedge clk) begin
         block_on <= 0;
         color <= BLACK;
-        //visible <= visible_out;
+        visible <= visible_out;
 
         if ((hCount >= start_x && hCount < end_x) && (vCount >= start_y && vCount < end_y)) begin
             // Calculate the current row and column
             current_row = (vCount - start_y) / (block_height + block_spacing);
             //integer current_col = (hCount - start_x) / (block_width + block_spacing);
 
-            //block_idx_x = (hCount - start_x) / (block_width + block_spacing);
-            //block_idx_y = (vCount - start_y) / (block_height + block_spacing);
+            block_idx_x = (hCount - start_x) / (block_width + block_spacing);
+            block_idx_y = (vCount - start_y) / (block_height + block_spacing);
             idx = block_idx_y * num_blocks_x + block_idx_x;
 
             // Check if the current pixel is within a block (excluding spacing)
