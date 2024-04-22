@@ -44,7 +44,7 @@ module block_controller(
 		begin 
 			//rough values for center of screen
 			xpos<=450;
-			ypos<=514;
+			ypos<=500;
 			score = 15'd0;
 		end
 		else if (clk) begin
