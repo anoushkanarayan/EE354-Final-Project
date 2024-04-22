@@ -15,7 +15,7 @@ module counter(
         refresh <= refresh + 21'd1;
     end
 
-    assign LEDCounter = refresh[20:18]; // Using three bits to generate states
+    assign LEDCounter = refresh[20:17]; // Using three bits to generate states
 
     always @ (*) begin
         case (LEDCounter)
