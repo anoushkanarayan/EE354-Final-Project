@@ -45,7 +45,7 @@ module vga_top(
 	wire block_on; // changed block_on and color_blocks
 	wire ball_on;
 	wire paddle_on;
-	wire [2:0] lives;
+	wire [3:0] lives;
 	wire [9:0] paddle_xpos, paddle_ypos;
 	wire [11:0] color_blocks;
 	wire [11:0] ball_pixel;

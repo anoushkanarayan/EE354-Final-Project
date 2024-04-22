@@ -37,6 +37,18 @@ module breakout_blocks(
 
     // Generate signal for block visibility and assign color
     always @(posedge clk) begin
+        if(rst)
+		begin 
+			//rough values for center of screen
+            visible = 56'b11111111111111111111111111111111111111111111111111111111;
+            // lives = 9;
+            // right = 2;
+			// xpos<=450;
+			// ypos<=514;
+            // down = 1;
+			// score = 15'd0;
+		end
+        if (clk) begin
         block_on <= 0;
         color <= BLACK;
         visible <= visible_out;
@@ -59,6 +71,7 @@ module breakout_blocks(
                 else color = GREEN;
                 end
         end
+    end
     end
 
 endmodule

@@ -8,7 +8,7 @@ module ball_movement(
 	input [55:0] visible,
 	output reg [11:0] ball_pixel,
     output reg ball_on, // Output to indicate whether we're on a block pixel
-	output reg [1:0] lives,
+	output reg [3:0] lives,
 	output reg [55:0] visible_out
    );
 
@@ -48,7 +48,7 @@ module ball_movement(
 		xpos<=450;
 		ypos<=514;
 		down = 1;
-		lives = 3;
+		lives = 9;
 		livesFlag = 1;
 		visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
         right = 2;
@@ -58,13 +58,17 @@ module ball_movement(
 	
 	always@(posedge clk) 
 	begin
-		/*if(rst)
+		if(rst)
 		begin 
 			//rough values for center of screen
+            visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
+            lives = 9;
+            right = 2;
 			xpos<=450;
 			ypos<=514;
+            down = 1;
 			// score = 15'd0;
-		end*/
+		end
 		if (clk) begin
 		
 		/* Note that the top left of the screen does NOT correlate to vCount=0 and hCount=0. The display_controller.v file has the 
@@ -77,7 +81,7 @@ module ball_movement(
 
             ball_on <= 0;
             greenMiddleSquareSpeed = greenMiddleSquareSpeed + 50'd1;  // this is basically a counter
-            if (greenMiddleSquareSpeed >= 50'd500000) //500 thousand
+            if (greenMiddleSquareSpeed >= 50'd750000) //500 thousand
                 begin
                     if (down==1) ypos = ypos + 10'd1;
                     else if (down==0) ypos = ypos - 10'd1;

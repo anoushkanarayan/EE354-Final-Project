@@ -2,7 +2,7 @@
 module counter(
     input clk,
     input [15:0] displayNumber,
-    input [2:0] displayScore,  // Assumed to fit in one digit (0-7)
+    input [3:0] displayScore,  // Assumed to fit in one digit (0-7)
     output reg [7:0] anode,    // Corrected to handle 8 separate displays
     output reg [6:0] ssdOut
 );
