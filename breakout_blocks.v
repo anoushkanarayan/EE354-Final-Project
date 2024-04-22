@@ -2,6 +2,7 @@
 
 module breakout_blocks(
     input clk,
+    input rst, 
     input [9:0] hCount, // Horizontal pixel count from the display_controller
     input [9:0] vCount, // Vertical pixel count from the display_controller
     input [55:0] visible_out,

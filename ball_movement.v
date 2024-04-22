@@ -2,6 +2,7 @@
 
 module ball_movement(
 	input clk, //this clock must be a slow enough clock to view the changing positions of the objects
+    input rst, 
 	input [9:0] hCount, vCount,
 	input paddle_on,
 	input [9:0] paddle_xpos, paddle_ypos,
