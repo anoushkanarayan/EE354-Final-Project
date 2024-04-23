@@ -10,7 +10,8 @@ module ball_movement(
 	output reg [11:0] ball_pixel,
     output reg ball_on, // Output to indicate whether we're on a block pixel
 	output reg [3:0] lives,
-	output reg [55:0] visible_out
+	output reg [55:0] visible_out,
+	output reg [15:0] score
    );
 
 	// wire block_fill; our value is ball_on 
@@ -63,7 +64,7 @@ module ball_movement(
 		begin 
 			//rough values for center of screen
             visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
-            lives = 9;
+            lives = 7;
             right = 2;
 			xpos<=450;
 			ypos<=300;
@@ -110,7 +111,7 @@ module ball_movement(
 						begin
 							lives <= lives-1;
 							livesFlag <= 0;
-							down <= 0;	
+							down <= 0;	// can we try xpos and ypos resetting
 						end				
 					/*else if (ypos == 10'd600)
 						begin
@@ -139,7 +140,8 @@ module ball_movement(
 							if (visible[block_idx] && xpos >= block_x && xpos < block_x + block_width && ypos >= block_y && ypos < block_y + block_height) 
 								begin
 									visible_out[block_idx] <= 0; // Block hit
-									down <= 1; // Change direction
+									down <= !down; // Change direction
+									score = score + 16'd1;
 								end
 						end
                 end

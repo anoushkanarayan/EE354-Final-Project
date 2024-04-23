@@ -8,7 +8,7 @@ module block_controller(
 	input [9:0] hCount, vCount,
 	output reg [11:0] rgb,
 	output reg [11:0] background,
-	output reg [15:0] score,
+	//output reg [15:0] score,
 	output reg paddle_on,
 	output reg [9:0] xpos, ypos
    );
@@ -45,7 +45,7 @@ module block_controller(
 			//rough values for center of screen
 			xpos<=450;
 			ypos<=500;
-			score = 15'd0;
+			// score = 15'd0;
 		end
 		else if (clk) begin
 		
@@ -60,7 +60,7 @@ module block_controller(
 				if(xpos==800) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
 					begin
 					xpos<=xpos;
-					score = score + 16'd1;
+					// score = score + 16'd1;
 					end
 			end
 			else if(left) begin
@@ -68,7 +68,7 @@ module block_controller(
 				if(xpos==150)
 					begin
 					xpos<=xpos;
-					score = score + 16'd1; // if we hit the boundary should increment the counter, we'll see how this works?
+					// score = score + 16'd1; // if we hit the boundary should increment the counter, we'll see how this works?
 					end 
 			end
 			// else if(up) begin
