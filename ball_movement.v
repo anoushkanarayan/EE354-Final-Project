@@ -17,6 +17,7 @@ module ball_movement(
 	// wire block_fill; our value is ball_on 
     integer down;
     integer right;
+	integer state;
 
     parameter BLACK = 12'b0000_0000_0000;
 	parameter WHITE = 12'b1111_1111_1111;
@@ -54,13 +55,14 @@ module ball_movement(
 		livesFlag = 1;
 		visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
         right = 2;
+		state = 1;
 		// score = 15'd0;
 		// reset = 1'b0;
 	end
 	
 	always@(posedge clk) 
 	begin
-		if(rst)
+		if(rst || (state == 0))
 		begin 
 			//rough values for center of screen
             visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
@@ -69,6 +71,7 @@ module ball_movement(
 			xpos<=450;
 			ypos<=300;
             down = 1;
+			state = 1;
 			// score = 15'd0;
 		end
 		if (clk) begin
@@ -112,7 +115,11 @@ module ball_movement(
 							lives <= lives-1;
 							livesFlag <= 0;
 							down <= 0;	// can we try xpos and ypos resetting
-						end				
+						end			
+						if (lives == 1)
+						begin
+							state = 0;
+						end	
 					/*else if (ypos == 10'd600)
 						begin
 							down <= 0;
