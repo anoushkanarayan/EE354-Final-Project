@@ -49,7 +49,7 @@ module ball_movement(
 		xpos<=450;
 		ypos<=300;
 		down = 1;
-		lives = 9;
+		lives = 7;
 		livesFlag = 1;
 		visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
         right = 2;
