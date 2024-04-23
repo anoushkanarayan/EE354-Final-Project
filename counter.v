@@ -15,29 +15,41 @@ module counter(
         refresh <= refresh + 21'd1;
     end
 
-    assign LEDCounter = refresh[20:17]; // Using three bits to generate states
+    assign LEDCounter = refresh[20:17];
 
     always @ (*) begin
         case (LEDCounter)
         3'b000: begin
-            anode = 8'b11111110; // Activates the first display from the left
-            LEDNumber = displayNumber / 1000; // Thousands digit
+            anode = 8'b11111110; 
+            if (displayNUmber==56) begin
+                ssdOut = 7'b1001000;  //Y
+            end else begin
+                LEDNumber = displayNumber / 1000;
+            end
         end
         3'b001: begin
-            anode = 8'b11111101; // Second display from the left
-            LEDNumber = (displayNumber % 1000) / 100; // Hundreds digit
+            anode = 8'b11111101; 
+            if (displayNUmber==56) begin
+                ssdOut = 7'b0001000; //A
+            end else begin
+                LEDNumber = (displayNumber % 1000) / 100;  
+            end
         end
         3'b010: begin
-            anode = 8'b11111011; // Third display from the left
-            LEDNumber = (displayNumber % 100) / 10; // Tens digit
+            anode = 8'b11111011; 
+            if (displayNUmber==56) begin
+                ssdOut = 7'b1001000;  //Y
+            end else begin
+                LEDNumber = (displayNumber % 100) / 10; 
+            end
         end
         3'b011: begin
-            anode = 8'b11110111; // Fourth display from the left
-            LEDNumber = displayNumber % 10; // Units digit
+            anode = 8'b11110111; 
+            LEDNumber = displayNumber % 10;
         end
         3'b100: begin
-            anode = 8'b11101111; // Fifth display from the left (first on the right half)
-            LEDNumber = displayScore; // Score display
+            anode = 8'b11101111; 
+            LEDNumber = displayScore; 
         end
         default: begin
             anode = 8'b11111111; // Turn off all displays in other states

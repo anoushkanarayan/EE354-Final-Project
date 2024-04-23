@@ -95,17 +95,17 @@ module ball_movement(
 					// ypos = ypos + 10'd1;
 					greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
 					
-					if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 9 && xpos <= paddle_xpos + 9)
+					if (ypos+5 >= paddle_ypos - 5 && ypos+5 <= paddle_ypos + 5 && xpos >= paddle_xpos - 9 && xpos <= paddle_xpos + 9)
 						begin
 							down <= 0;
                             right <= 2;
 						end
-                    else if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos - 10)
+                    else if (ypos+5 >= paddle_ypos - 5 && ypos+5 <= paddle_ypos + 5 && xpos >= paddle_xpos - 30 && xpos <= paddle_xpos - 10)
                         begin   
                             right <= 0;
                             down <= 0;
                         end
-                    else if (ypos >= paddle_ypos - 5 && ypos <= paddle_ypos + 5 && xpos <= paddle_xpos + 30 && xpos >= paddle_xpos + 10)
+                    else if (ypos+5 >= paddle_ypos - 5 && ypos+5 <= paddle_ypos + 5 && xpos <= paddle_xpos + 30 && xpos >= paddle_xpos + 10)
                     begin   
                         right <= 1;
                         down <= 0;
