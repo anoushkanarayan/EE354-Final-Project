@@ -21,8 +21,10 @@ module counter(
         case (LEDCounter)
         3'b000: begin
             anode = 8'b11111110; 
-            if (displayNUmber==56) begin
+            if (displayNumber==56) begin
                 ssdOut = 7'b1001000;  //Y
+            end else if (displayScore==0) begin
+                ssdOut = 7'bb0110001;  //E
             end else begin
                 LEDNumber = displayNumber / 1000;
             end
@@ -31,6 +33,8 @@ module counter(
             anode = 8'b11111101; 
             if (displayNUmber==56) begin
                 ssdOut = 7'b0001000; //A
+            end else if (displayScore==0) begin
+                ssdOut = 7'bb0100100;  //S
             end else begin
                 LEDNumber = (displayNumber % 1000) / 100;  
             end
@@ -39,13 +43,19 @@ module counter(
             anode = 8'b11111011; 
             if (displayNUmber==56) begin
                 ssdOut = 7'b1001000;  //Y
+            end else if (displayScore==0) begin
+                ssdOut = 7'b0000001;  //O
             end else begin
                 LEDNumber = (displayNumber % 100) / 10; 
             end
         end
         3'b011: begin
             anode = 8'b11110111; 
-            LEDNumber = displayNumber % 10;
+            if (displayScore==0) begin
+                ssdOut = 7'b0110000;  //L
+            end else begin
+                LEDNumber = displayNumber % 10;
+            end
         end
         3'b100: begin
             anode = 8'b11101111; 
