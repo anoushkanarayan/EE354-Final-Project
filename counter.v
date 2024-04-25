@@ -22,29 +22,29 @@ module counter(
         3'b000: begin
             anode = 8'b11111110; 
             if (displayNumber==56) begin
-                ssdOut = 7'b1001000;  //Y
+                LEDNumber = 8;  //Y
             end else if (displayScore==0) begin
-                ssdOut = 7'bb0110001;  //E
+                LEDNumber = 13;  //E
             end else begin
                 LEDNumber = displayNumber / 1000;
             end
         end
         3'b001: begin
             anode = 8'b11111101; 
-            if (displayNUmber==56) begin
-                ssdOut = 7'b0001000; //A
+            if (displayNumber==56) begin
+                LEDNumber = 9; //A
             end else if (displayScore==0) begin
-                ssdOut = 7'bb0100100;  //S
+                LEDNumber = 12;  //S
             end else begin
                 LEDNumber = (displayNumber % 1000) / 100;  
             end
         end
         3'b010: begin
             anode = 8'b11111011; 
-            if (displayNUmber==56) begin
-                ssdOut = 7'b1001000;  //Y
+            if (displayNumber==56) begin
+                LEDNumber = 8;  //Y
             end else if (displayScore==0) begin
-                ssdOut = 7'b0000001;  //O
+                LEDNumber = 11;  //O
             end else begin
                 LEDNumber = (displayNumber % 100) / 10; 
             end
@@ -52,7 +52,7 @@ module counter(
         3'b011: begin
             anode = 8'b11110111; 
             if (displayScore==0) begin
-                ssdOut = 7'b0110000;  //L
+                LEDNumber = 10; //L
             end else begin
                 LEDNumber = displayNumber % 10;
             end
@@ -77,6 +77,12 @@ module counter(
         5: ssdOut = 7'b0100100; // 5
         6: ssdOut = 7'b0100000; // 6
         7: ssdOut = 7'b0001111; // 7
+        8: ssdOut = 7'b1000100; // Y
+        9: ssdOut = 7'b0001000; // A
+        10: ssdOut = 7'b0110000; // L
+        11: ssdOut = 7'b0000001; // O
+        12: ssdOut = 7'b0100100; // S
+        13: ssdOut = 7'b0110001; // E
         default: ssdOut = 7'b1111111; // Clear or off state
         endcase
     end

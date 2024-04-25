@@ -49,14 +49,14 @@ module ball_movement(
 
     initial begin
 		xpos<=450;
-		ypos<=300;
+		ypos<=700;
 		down = 1;
 		lives = 3;
 		livesFlag = 1;
 		visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
         right = 2;
 		state = 1;
-		// score = 15'd0;
+		score = 15'd0;
 		// reset = 1'b0;
 	end
 	
@@ -66,13 +66,13 @@ module ball_movement(
 		begin 
 			//rough values for center of screen
             visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
-            lives = 7;
+            lives = 3;
             right = 2;
 			xpos<=450;
-			ypos<=300;
+			ypos<=700;
             down = 1;
 			state = 1;
-			// score = 15'd0;
+			score = 15'd0;
 		end
 		if (clk) begin
 		
@@ -116,7 +116,7 @@ module ball_movement(
 							livesFlag <= 0;
 							down <= 0;	// can we try xpos and ypos resetting
 						end			
-						if (lives == 1)
+						if (lives == 0)
 						begin
 							state = 0;
 						end	
