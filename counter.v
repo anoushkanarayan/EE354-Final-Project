@@ -45,7 +45,7 @@ module counter(
         end
         3'b101: begin
             anode = 8'b11011111; 
-            if (displayNumber==56) begin
+            if (displayNumber==4) begin
                 LEDNumber = 10;  //Y
             end else if (displayScore==0) begin
                 LEDNumber = 14;  //S
@@ -55,7 +55,7 @@ module counter(
         end
         3'b110: begin
             anode = 8'b10111111; 
-            if (displayNumber==56) begin
+            if (displayNumber==4) begin
                 LEDNumber = 11;  //A
             end else if (displayScore==0) begin
                 LEDNumber = 13;  //O
@@ -65,7 +65,7 @@ module counter(
         end
         3'b111: begin
             anode = 8'b01111111; 
-            if (displayNumber==56) begin
+            if (displayNumber==4) begin
                 LEDNumber = 10;  //Y
             end else if (displayScore==0) begin
                 LEDNumber = 12;  //L

@@ -4,7 +4,7 @@ module block_controller(
 	input clk, //this clock must be a slow enough clock to view the changing positions of the objects
 	input bright,
 	input rst,
-	input up, input down, input left, input right,
+	input up, input down, input left, input right, input state,
 	input [9:0] hCount, vCount,
 	output reg [11:0] rgb,
 	output reg [11:0] background,
@@ -40,7 +40,7 @@ module block_controller(
 	
 	always@(posedge clk, posedge rst) 
 	begin
-		if(rst)
+		if(rst || (state == 0))
 		begin 
 			//rough values for center of screen
 			xpos<=450;
@@ -86,7 +86,7 @@ module block_controller(
 	
 	//the background color reflects the most recent button press
 	always@(posedge clk, posedge rst) begin
-		if(rst)
+		if(rst || (state == 0))
 			background <= 12'b1111_1111_1111;
 		else 
 			if(right)

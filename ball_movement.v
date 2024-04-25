@@ -11,13 +11,13 @@ module ball_movement(
     output reg ball_on, // Output to indicate whether we're on a block pixel
 	output reg [3:0] lives,
 	output reg [55:0] visible_out,
-	output reg [15:0] score
+	output reg [15:0] score,
+	output reg state
    );
 
 	// wire block_fill; our value is ball_on 
     integer down;
     integer right;
-	integer state;
 
 	integer startup_delay; // New variable for startup delay countdown
 
@@ -104,7 +104,12 @@ module ball_movement(
 						// ypos = ypos + 10'd1;
 						greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
 						
-						if (ypos+5 >= paddle_ypos - 5 && ypos+5 <= paddle_ypos + 5 && xpos >= paddle_xpos - 9 && xpos <= paddle_xpos + 9)
+						if (score == 4)
+							begin
+								state = 0;
+								startup_delay = STARTUP_DELAY; 
+							end
+						else if (ypos+5 >= paddle_ypos - 5 && ypos+5 <= paddle_ypos + 5 && xpos >= paddle_xpos - 9 && xpos <= paddle_xpos + 9)
 							begin
 								down <= 0;
 								right <= 2;
