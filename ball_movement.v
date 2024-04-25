@@ -67,7 +67,7 @@ module ball_movement(
 	
 	always@(posedge clk) 
 	begin
-		if(rst || (state == 0))
+		if((rst || (state == 0)) && (startup_delay == 0))
 		begin 
 			//rough values for center of screen
             visible_out = 56'b11111111111111111111111111111111111111111111111111111111;
@@ -78,7 +78,6 @@ module ball_movement(
             down = 1;
 			state = 1;
 			score = 15'd0;
-			startup_delay = STARTUP_DELAY; 
 		end
 
 		if (clk) begin
@@ -129,6 +128,7 @@ module ball_movement(
 							if (lives == 0)
 							begin
 								state = 0;
+								startup_delay = STARTUP_DELAY; 
 							end	
 						/*else if (ypos == 10'd600)
 							begin
