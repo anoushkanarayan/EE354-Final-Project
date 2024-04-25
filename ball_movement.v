@@ -74,6 +74,7 @@ module ball_movement(
 			state = 1;
 			score = 15'd0;
 		end
+
 		if (clk) begin
 		
 		/* Note that the top left of the screen does NOT correlate to vCount=0 and hCount=0. The display_controller.v file has the 
