@@ -6,6 +6,7 @@ module breakout_blocks(
     input [9:0] hCount, // Horizontal pixel count from the display_controller
     input [9:0] vCount, // Vertical pixel count from the display_controller
     input [55:0] visible_out,
+    input state,
     output reg block_on, // Output to indicate whether we're on a block pixel
     output reg [11:0] color, // Output color based on block state
     output reg [55:0] visible
@@ -38,7 +39,7 @@ module breakout_blocks(
 
     // Generate signal for block visibility and assign color
     always @(posedge clk) begin
-        if(rst)
+        if(rst || (state == 0))
 		begin 
 			//rough values for center of screen
             visible = 56'b11111111111111111111111111111111111111111111111111111111;

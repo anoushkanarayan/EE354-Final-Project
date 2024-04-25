@@ -104,7 +104,7 @@ module ball_movement(
 						// ypos = ypos + 10'd1;
 						greenMiddleSquareSpeed = 50'd0; // setting it back to 0 so we can restart the counter
 						
-						if (score == 4)
+						if (score == 56)
 							begin
 								state = 0;
 								startup_delay = STARTUP_DELAY; 
