@@ -49,7 +49,7 @@ module ball_movement(
 
     initial begin
 		xpos<=450;
-		ypos<=700;
+		ypos<=400; // changed from 700 to 400
 		down = 1;
 		lives = 3;
 		livesFlag = 1;
@@ -69,7 +69,7 @@ module ball_movement(
             lives = 3;
             right = 2;
 			xpos<=450;
-			ypos<=700;
+			ypos<=400; // changed from 700 to 400
             down = 1;
 			state = 1;
 			score = 15'd0;
@@ -158,51 +158,9 @@ module ball_movement(
                     ball_on <= 1;
                 end
 
-
-
-			// if(right) begin
-			// 	xpos<=xpos+2; //change the amount you increment to make the speed faster 
-			// 	if(xpos==800) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
-			// 		begin
-			// 		xpos<=xpos;
-			// 		score = score + 16'd1;
-			// 		end
-			// end
-			// else if(left) begin
-			// 	xpos<=xpos-2;
-			// 	if(xpos==150)
-			// 		begin
-			// 		xpos<=xpos;
-			// 		score = score + 16'd1; // if we hit the boundary should increment the counter, we'll see how this works?
-			// 		end 
-			// end
-			// else if(up) begin
-			// 	ypos<=ypos-2;
-			// 	if(ypos==34)
-			// 		ypos<=514;
-			// end
-			// else if(down) begin
-			// 	ypos<=ypos+2;
-			// 	if(ypos==514)
-			// 		ypos<=34;
-			// end
 		end
 	end
 	
-	//the background color reflects the most recent button press
-	// always@(posedge clk, posedge rst) begin
-	// 	if(rst)
-	// 		background <= 12'b1111_1111_1111;
-	// 	else 
-	// 		if(right)
-	// 			background <= 12'b1111_1111_0000;
-	// 		else if(left)
-	// 			background <= 12'b0000_1111_1111;
-	// 		// else if(down)
-	// 		// 	background <= 12'b0000_1111_0000;
-	// 		// else if(up)
-	// 		// 	background <= 12'b0000_0000_1111;
-	// end
 
 	
 	
