@@ -34,7 +34,7 @@ module ball_movement(
 	parameter start_x = 152;
     parameter start_y = 150;
 
-	parameter STARTUP_DELAY = 50000000; // 50 million cycles delay for startup
+	parameter STARTUP_DELAY = 500000000; // 50 million cycles delay for startup
 	
 	//these two values dictate the center of the block, incrementing and decrementing them leads the block to move in certain directions
 	reg [9:0] xpos, ypos; // position of center of the block. We will also have a block type thing
@@ -78,6 +78,7 @@ module ball_movement(
             down = 1;
 			state = 1;
 			score = 15'd0;
+			startup_delay = STARTUP_DELAY; 
 		end
 
 		if (clk) begin
